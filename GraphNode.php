@@ -58,8 +58,8 @@ for($i = 0; $i < count($allgraphnodes); $i++) {
     array_push($nodes, $allgraphnodes[$i]->name);
     
     foreach ($allgraphnodes[$i]->edges as $key => $value) {
-        if(!in_array("{$value}{$allgraphnodes[$i]->name}", $edges))
-            array_push($edges, "{$allgraphnodes[$i]->name}{$value}");
+        if(!in_array("{$value},{$allgraphnodes[$i]->name}", $edges))
+            array_push($edges, "{$allgraphnodes[$i]->name},{$value}");
     }
         
 }
@@ -76,26 +76,24 @@ for($i = 0; $i < count($allgraphnodes); $i++) {
 print_r($nodes);
 print_r($edges);
 
+$var = [];
 $NODES = [];
 foreach ($nodes as $key => $value) {
-    $var = "{id: {$value}, label: '{$value}'}";
+    $var["id"] = $value;
+    $var["label"] = "ooo\nooo\nooo\no wins";
     array_push($NODES, $var);
 }
-$NODES = implode(",", $NODES);
-$NODES = "[" . $NODES . "]";
 
-
+$var = [];
 $EDGES = [];
 foreach($edges as $key => $value) {
-//     $var1 = explode("", $value);
-//     print_r($var1);
-    $var = "{from: {$value[0]}, to: {$value[1]}}";
+	$var1 = explode(",", $value);
+    $var["from"] = $var1[0];
+    $var["to"] = $var1[1];
     array_push($EDGES, $var);
 }
-$EDGES = implode(",", $EDGES);
-$EDGES = "[" . $EDGES . "]";
 
-echo "nodes: ". $NODES. "<br>";
-echo "edges: ". $EDGES. "<br>";
+echo "nodes: ". json_encode($NODES) . "<br>";
+echo "edges: ". json_encode($EDGES) . "<br>";
 
 ?>
